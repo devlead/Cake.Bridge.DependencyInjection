@@ -1,0 +1,9 @@
+<Project>
+ <PropertyGroup>
+   <CakeVersion>1.0.0-rc0002</CakeVersion>
+ </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../cake-contrib-medium.png" Pack="true" PackagePath=""/>
+  </ItemGroup>
+</Project>

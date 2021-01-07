@@ -8,8 +8,15 @@ Provides helpers for providing Cake context using Microsoft DependencyInjection,
 
 The assembly is published at [nuget.org/packages/Cake.Bridge.DependencyInjection](https://www.nuget.org/packages/Cake.Bridge.DependencyInjection).
 
+#### .NET CLI
+
 ```bash
-dotnet add package Cake.Bridge.DependencyInjection --version 0.1.0-alpha0000
+dotnet add package Cake.Bridge.DependencyInjection --version 0.1.0-alpha0001
+```
+
+#### PackageReference
+```xml
+<PackageReference Include="Cake.Bridge.DependencyInjection" Version="0.1.0-alpha0001" />
 ```
 
 ### Register

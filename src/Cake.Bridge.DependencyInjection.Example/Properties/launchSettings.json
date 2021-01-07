@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Cake.Bridge.DependencyInjection.Example": {
+      "commandName": "Project",
+      "commandLineArgs": "context"
+    }
+  }
+}

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Cake.Core;
 using Cake.Core.Configuration;
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Core.IO.NuGet;
 using Cake.Core.Reflection;
+using Cake.Core.Scripting;
 using Cake.Core.Tooling;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,7 +14,10 @@ namespace Cake.Bridge.DependencyInjection
 {
     public static class CakeCoreExtensions
     {
-        public static IServiceCollection AddCakeCore(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddCakeCore(
+            this IServiceCollection serviceCollection,
+            IDictionary<string, string> cakeConfiguration = null
+            )
         {
             // Execution
             serviceCollection.AddSingleton<ICakeContext, CakeContext>();
@@ -29,8 +32,10 @@ namespace Cake.Bridge.DependencyInjection
             serviceCollection.AddSingleton<ICakeDataService>(cakeDataService);
 
             // Utilities
-            serviceCollection.AddSingleton<ICakeConfiguration>(new CakeConfiguration(new Dictionary<string, string>()));
-            serviceCollection.AddSingleton<ICakeArguments>(new CakeArguments(Array.Empty<string>().ToLookup(key => key)));
+            var arguments = new BridgeArguments();
+            serviceCollection.AddSingleton(arguments);
+            serviceCollection.AddSingleton<ICakeArguments>(arguments);
+            serviceCollection.AddSingleton<ICakeConfiguration>(new CakeConfiguration(cakeConfiguration ?? new Dictionary<string, string>()));
 
             // Environment
             serviceCollection.AddSingleton<ICakeEnvironment, CakeEnvironment>();
@@ -54,7 +59,14 @@ namespace Cake.Bridge.DependencyInjection
             serviceCollection.AddSingleton<IToolLocator, ToolLocator>();
 
             // Logging
-            serviceCollection.AddSingleton<ICakeLog, CakeMicrosoftExtensionsLogging>();
+            serviceCollection.AddSingleton<IConsole, CakeConsole>();
+            serviceCollection.AddSingleton<ICakeLog, CakeBuildLog>();
+
+            // Scripting
+            serviceCollection.AddSingleton<ICakeReportPrinter, CakeReportPrinter>();
+            serviceCollection.AddSingleton<IExecutionStrategy, DefaultExecutionStrategy>();
+            serviceCollection.AddSingleton<ICakeEngine, CakeEngine>();
+            serviceCollection.AddSingleton<IScriptHost, BridgeScriptHost>();
 
             return serviceCollection;
         }

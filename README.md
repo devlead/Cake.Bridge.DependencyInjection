@@ -11,18 +11,18 @@ The assembly is published at [nuget.org/packages/Cake.Bridge.DependencyInjection
 #### .NET CLI
 
 ```bash
-dotnet add package Cake.Bridge.DependencyInjection --version 0.1.0-alpha0003
+dotnet add package Cake.Bridge.DependencyInjection --version 0.1.0
 ```
 
 #### PackageReference
 ```xml
-<PackageReference Include="Cake.Bridge.DependencyInjection" Version="0.1.0-alpha0003" />
+<PackageReference Include="Cake.Bridge.DependencyInjection" Version="0.1.0" />
 ```
 
 ### Register
 
 ```csharp
-using using Cake.Bridge.DependencyInjection;
+using Cake.Bridge.DependencyInjection;
 ...
 serviceCollection
     .AddCakeCore();

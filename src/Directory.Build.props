@@ -1,6 +1,6 @@
 <Project>
  <PropertyGroup>
-   <CakeVersion>1.0.0-rc0002</CakeVersion>
+   <CakeVersion>1.0.0</CakeVersion>
  </PropertyGroup>
 
   <ItemGroup>

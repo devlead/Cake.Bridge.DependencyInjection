@@ -1,8 +1,8 @@
 // Install modules
-#module "nuget:?package=Cake.DotNetTool.Module&version=0.4.0"
+#module "nuget:?package=Cake.DotNetTool.Module&version=1.0.1"
 
 // Install .NET Core Global tools.
-#tool "dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=5.1.2"
+#tool "dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=5.6.6"
 
 #load "build/records.cake"
 #load "build/helpers.cake"

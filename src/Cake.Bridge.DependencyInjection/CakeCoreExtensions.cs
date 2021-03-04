@@ -22,11 +22,7 @@ namespace Cake.Bridge.DependencyInjection
             // Execution
             serviceCollection.AddSingleton<ICakeContext, CakeContext>();
 
-            var cakeDataService = typeof(ICakeDataService)
-                .Assembly
-                .GetType("Cake.Core.CakeDataService")
-                ?.GetConstructor(Type.EmptyTypes)
-                ?.Invoke(Array.Empty<object>()) as ICakeDataService ?? throw new CakeException("Failed to resolve Cake.Core.CakeDataService");
+            var cakeDataService = new CakeDataService();
 
             serviceCollection.AddSingleton<ICakeDataResolver>(cakeDataService);
             serviceCollection.AddSingleton<ICakeDataService>(cakeDataService);

@@ -55,6 +55,29 @@ Task("Clean")
     .Does<BuildData>(
         static (context, data) => context.CleanDirectories(data.DirectoryPathsToClean)
     )
+.Then("DPI")
+    .Does<BuildData>(
+        static (context, data) => context.DotNetCoreTool(
+                "tool",
+                new DotNetCoreToolSettings {
+                    ArgumentCustomization = args => args
+                                                        .Append("run")
+                                                        .Append("dpi")
+                                                        .Append("nuget")
+                                                        .Append("--silent")
+                                                        .AppendSwitchQuoted("--output", "table")
+                                                        .Append(
+                                                            (
+                                                                !string.IsNullOrWhiteSpace(context.EnvironmentVariable("NuGetReportSettings_SharedKey"))
+                                                                &&
+                                                                !string.IsNullOrWhiteSpace(context.EnvironmentVariable("NuGetReportSettings_WorkspaceId"))
+                                                            )
+                                                                ? "report"
+                                                                : "analyze"
+                                                            )
+                }
+            )
+    )
 .Then("Restore")
     .Does<BuildData>(
         static (context, data) => context.DotNetCoreRestore(

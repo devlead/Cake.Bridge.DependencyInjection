@@ -55,6 +55,15 @@ Task("Clean")
     .Does<BuildData>(
         static (context, data) => context.CleanDirectories(data.DirectoryPathsToClean)
     )
+.Then("Restore")
+    .Does<BuildData>(
+        static (context, data) => context.DotNetCoreRestore(
+            data.ProjectRoot.FullPath,
+            new DotNetCoreRestoreSettings {
+                MSBuildSettings = data.MSBuildSettings
+            }
+        )
+    )
 .Then("DPI")
     .Does<BuildData>(
         static (context, data) => context.DotNetCoreTool(
@@ -77,15 +86,6 @@ Task("Clean")
                                                             )
                 }
             )
-    )
-.Then("Restore")
-    .Does<BuildData>(
-        static (context, data) => context.DotNetCoreRestore(
-            data.ProjectRoot.FullPath,
-            new DotNetCoreRestoreSettings {
-                MSBuildSettings = data.MSBuildSettings
-            }
-        )
     )
 .Then("Build")
     .Default()

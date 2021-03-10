@@ -84,6 +84,7 @@ Task("Clean")
                                                                 ? "report"
                                                                 : "analyze"
                                                             )
+                                                        .AppendSwitchQuoted("--buildversion", data.Version)
                 }
             )
     )

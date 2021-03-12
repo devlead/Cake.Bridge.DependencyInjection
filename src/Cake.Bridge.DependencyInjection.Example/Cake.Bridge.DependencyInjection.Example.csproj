@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Spectre.Console" Version="0.37.0" />
-    <PackageReference Include="Spectre.Cli.Extensions.DependencyInjection" Version="0.3.0" />
+    <PackageReference Include="Spectre.Console" Version="0.38.0" />
+    <PackageReference Include="Spectre.Cli.Extensions.DependencyInjection" Version="0.4.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="Cake.Core" Version="$(CakeVersion)" />
     <PackageReference Include="Cake.Common" Version="$(CakeVersion)" />

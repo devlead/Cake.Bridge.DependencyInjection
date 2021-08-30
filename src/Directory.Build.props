@@ -1,6 +1,6 @@
 <Project>
  <PropertyGroup>
-   <CakeVersion>1.1.0</CakeVersion>
+   <CakeVersion>1.2.0</CakeVersion>
    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
  </PropertyGroup>
 

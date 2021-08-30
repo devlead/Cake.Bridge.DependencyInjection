@@ -24,5 +24,8 @@ namespace Cake.Bridge.DependencyInjection
                 value => (ICollection<string>) value.ToArray()
             );
         }
+
+        public IDictionary<string, ICollection<string>> GetArguments()
+            => Arguments;
     }
 }

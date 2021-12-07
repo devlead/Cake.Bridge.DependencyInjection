@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using Cake.Bridge.DependencyInjection.Example.Helper;
 using Cake.Core.Diagnostics;
 using Spectre.Console.Cli;
 

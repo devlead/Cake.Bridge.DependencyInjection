@@ -19,6 +19,11 @@ namespace Cake.Bridge.DependencyInjection
             IDictionary<string, string> cakeConfiguration = null
             )
         {
+            // Converters
+            serviceCollection.AddSingleton<DirectoryPathConverter>();
+            serviceCollection.AddSingleton<FilePathConverter>();
+            serviceCollection.AddSingleton<VerbosityConverter>();
+
             // Execution
             serviceCollection.AddSingleton<ICakeContext, CakeContext>();
 

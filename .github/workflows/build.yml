@@ -14,18 +14,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest]
+        os: [windows-2022]
     steps:
       - name: Get the sources
         uses: actions/checkout@v2
 
       - name: Fetch all history for all tags and branches
         run: git fetch --prune --unshallow
-
-      - name: Install .NET Core SDK 2.1.811
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '2.1.811'
 
       - name: Install .NET Core SDK 3.1.x
         uses: actions/setup-dotnet@v1

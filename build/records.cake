@@ -6,6 +6,7 @@ public record BuildData(
     bool IsMainBranch,
     bool ShouldNotPublish,
     DirectoryPath ProjectRoot,
+    FilePath IntegrationTestProject,
     DotNetMSBuildSettings MSBuildSettings,
     DirectoryPath ArtifactsPath,
     DirectoryPath OutputPath

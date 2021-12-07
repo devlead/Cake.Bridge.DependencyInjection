@@ -34,7 +34,8 @@ Setup(
             version,
             isMainBranch,
             !context.IsRunningOnWindows(),
-            "src",
+            "./src",
+            context.MakeAbsolute(FilePath.FromString("./src/Cake.Bridge.DependencyInjection.Example/Cake.Bridge.DependencyInjection.Example.csproj")),
             new DotNetMSBuildSettings()
                 .SetConfiguration("Release")
                 .SetVersion(version)
@@ -114,13 +115,13 @@ Task("Clean")
             => new []{ "context", "host" },
         static (data, item, context)
             => context.DotNetRun(
-                "./src/Cake.Bridge.DependencyInjection.Example",
+                data.IntegrationTestProject.FullPath,
                 new ProcessArgumentBuilder()
                     .Append(item),
-                    new DotNetRunSettings{
-                        NoBuild = true,
-                        NoRestore = true,
-                        NoWorkingDirectory = true
+                    new DotNetRunSettings {
+                        Framework = context.XmlPeek(data.IntegrationTestProject.FullPath, "/Project/PropertyGroup/TargetFramework"),
+                        NoWorkingDirectory = true,
+                        NoRestore = true
                     }
             )
     )

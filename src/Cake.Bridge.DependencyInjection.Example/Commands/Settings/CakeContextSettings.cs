@@ -2,7 +2,6 @@ using System.ComponentModel;
 using Cake.Core;
 using Cake.Core.IO;
 using Cake.Bridge.DependencyInjection.Example.Commands.Validation;
-using Cake.Bridge.DependencyInjection.Example.Helper;
 using Cake.Core.Diagnostics;
 using Spectre.Console.Cli;
 

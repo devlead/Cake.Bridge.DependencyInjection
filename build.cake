@@ -15,18 +15,28 @@ Setup(
                 OutputType = GitVersionOutput.Json
             });
 
+        var branchName = assertedVersions.BranchName;
+        var isMainBranch = StringComparer.OrdinalIgnoreCase.Equals("main", branchName);
+
+
         var gh = context.GitHubActions();
         var version = assertedVersions.LegacySemVerPadded;
 
-        context.Information("Building version {0}", version);
+        context.Information("Building version {0} (Branch: {1}, IsMain: {2})",
+            version,
+            branchName,
+            isMainBranch);
 
         var artifactsPath = context
                             .MakeAbsolute(context.Directory("./artifacts"));
 
         return new BuildData(
             version,
-            "src",
-            new DotNetCoreMSBuildSettings()
+            isMainBranch,
+            !context.IsRunningOnWindows(),
+            "./src",
+            context.MakeAbsolute(FilePath.FromString("./src/Cake.Bridge.DependencyInjection.Example/Cake.Bridge.DependencyInjection.Example.csproj")),
+            new DotNetMSBuildSettings()
                 .SetConfiguration("Release")
                 .SetVersion(version)
                 .WithProperty("Copyright", $"Mattias Karlsson © {DateTime.UtcNow.Year}")
@@ -57,18 +67,18 @@ Task("Clean")
     )
 .Then("Restore")
     .Does<BuildData>(
-        static (context, data) => context.DotNetCoreRestore(
+        static (context, data) => context.DotNetRestore(
             data.ProjectRoot.FullPath,
-            new DotNetCoreRestoreSettings {
+            new DotNetRestoreSettings {
                 MSBuildSettings = data.MSBuildSettings
             }
         )
     )
 .Then("DPI")
     .Does<BuildData>(
-        static (context, data) => context.DotNetCoreTool(
+        static (context, data) => context.DotNetTool(
                 "tool",
-                new DotNetCoreToolSettings {
+                new DotNetToolSettings {
                     ArgumentCustomization = args => args
                                                         .Append("run")
                                                         .Append("dpi")
@@ -89,21 +99,37 @@ Task("Clean")
             )
     )
 .Then("Build")
-    .Default()
     .Does<BuildData>(
-        static (context, data) => context.DotNetCoreBuild(
+        static (context, data) => context.DotNetBuild(
             data.ProjectRoot.FullPath,
-            new DotNetCoreBuildSettings {
+            new DotNetBuildSettings {
                 NoRestore = true,
                 MSBuildSettings = data.MSBuildSettings
             }
         )
     )
+.Then("Integration-Test")
+    .Default()
+    .DoesForEach<BuildData, string>(
+        static (data, context)
+            => new []{ "context", "host" },
+        static (data, item, context)
+            => context.DotNetRun(
+                data.IntegrationTestProject.FullPath,
+                new ProcessArgumentBuilder()
+                    .Append(item),
+                    new DotNetRunSettings {
+                        Framework = context.XmlPeek(data.IntegrationTestProject.FullPath, "/Project/PropertyGroup/TargetFramework"),
+                        NoWorkingDirectory = true,
+                        NoRestore = true
+                    }
+            )
+    )
 .Then("Pack")
     .Does<BuildData>(
-        static (context, data) => context.DotNetCorePack(
+        static (context, data) => context.DotNetPack(
             data.ProjectRoot.FullPath,
-            new DotNetCorePackSettings {
+            new DotNetPackSettings {
                 NoBuild = true,
                 NoRestore = true,
                 OutputDirectory = data.NuGetOutputPath,
@@ -111,4 +137,42 @@ Task("Clean")
             }
         )
     )
+.Then("Upload-Artifacts")
+    .Does<BuildData>(
+        static (context, data) => context
+            .GitHubActions()
+            .Commands
+            .UploadArtifact(data.ArtifactsPath, "artifacts")
+    )
+.Then("Push-GitHub-Packages")
+    .WithCriteria<BuildData>( (context, data) => data.ShouldPushGitHubPackages())
+    .DoesForEach<BuildData, FilePath>(
+        static (data, context)
+            => context.GetFiles(data.NuGetOutputPath.FullPath + "/*.nupkg"),
+        static (data, item, context)
+            => context.DotNetNuGetPush(
+                item.FullPath,
+            new DotNetNuGetPushSettings
+            {
+                Source = data.GitHubNuGetSource,
+                ApiKey = data.GitHubNuGetApiKey
+            }
+        )
+    )
+.Then("Push-NuGet-Packages")
+    .WithCriteria<BuildData>( (context, data) => data.ShouldPushNuGetPackages())
+    .DoesForEach<BuildData, FilePath>(
+        static (data, context)
+            => context.GetFiles(data.NuGetOutputPath.FullPath + "/*.nupkg"),
+        static (data, item, context)
+            => context.DotNetNuGetPush(
+                item.FullPath,
+                new DotNetNuGetPushSettings
+                {
+                    Source = data.NuGetSource,
+                    ApiKey = data.NuGetApiKey
+                }
+        )
+    )
+.Then("GitHub-Actions")
 .Run();

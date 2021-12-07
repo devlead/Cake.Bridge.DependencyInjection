@@ -7,6 +7,8 @@ using Spectre.Cli.Extensions.DependencyInjection;
 var serviceCollection = new ServiceCollection()
     .AddCakeCore();
 
+serviceCollection.AddSingleton<Cake.Bridge.DependencyInjection.Example.Commands.Settings.CakeContextSettings>();
+
 using var registrar = new DependencyInjectionRegistrar(serviceCollection);
 var app = new CommandApp(registrar);
 

@@ -5,11 +5,11 @@ using System.Globalization;
 using Cake.Core;
 using Cake.Core.Diagnostics;
 
-namespace Cake.Bridge.DependencyInjection.Example.Helper
+namespace Cake.Bridge.DependencyInjection
 {
     public sealed class VerbosityConverter : TypeConverter
     {
-        private static readonly Dictionary<string, Verbosity> Lookup = new(StringComparer.OrdinalIgnoreCase)
+        private static readonly Dictionary<string, Verbosity> Lookup = new Dictionary<string, Verbosity>(StringComparer.OrdinalIgnoreCase)
         {
             { "q", Verbosity.Quiet },
             { "quiet", Verbosity.Quiet },
@@ -26,7 +26,7 @@ namespace Cake.Bridge.DependencyInjection.Example.Helper
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (value is not string stringValue)
+            if (!(value is string stringValue))
             {
                 throw new NotSupportedException("Can't convert value to verbosity.");
             }

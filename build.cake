@@ -98,7 +98,6 @@ Task("Clean")
             )
     )
 .Then("Build")
-    .Default()
     .Does<BuildData>(
         static (context, data) => context.DotNetBuild(
             data.ProjectRoot.FullPath,
@@ -107,6 +106,23 @@ Task("Clean")
                 MSBuildSettings = data.MSBuildSettings
             }
         )
+    )
+.Then("Integration-Test")
+    .Default()
+    .DoesForEach<BuildData, string>(
+        static (data, context)
+            => new []{ "context", "host" },
+        static (data, item, context)
+            => context.DotNetRun(
+                "./src/Cake.Bridge.DependencyInjection.Example",
+                new ProcessArgumentBuilder()
+                    .Append(item),
+                    new DotNetRunSettings{
+                        NoBuild = true,
+                        NoRestore = true,
+                        NoWorkingDirectory = true
+                    }
+            )
     )
 .Then("Pack")
     .Does<BuildData>(

@@ -2,7 +2,7 @@
 using Cake.Bridge.DependencyInjection;
 using Cake.Bridge.DependencyInjection.Example.Commands;
 using Spectre.Console.Cli;
-using Spectre.Cli.Extensions.DependencyInjection;
+using Spectre.Console.Cli.Extensions.DependencyInjection;
 
 var serviceCollection = new ServiceCollection()
     .AddCakeCore();

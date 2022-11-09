@@ -138,6 +138,7 @@ Task("Clean")
         )
     )
 .Then("Upload-Artifacts")
+    .WithCriteria<BuildData>( (context, data) => data.ShouldPushGitHubPackages())
     .Does<BuildData>(
         static (context, data) => context
             .GitHubActions()

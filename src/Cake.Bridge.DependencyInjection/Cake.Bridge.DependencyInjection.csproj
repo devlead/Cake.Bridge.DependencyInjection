@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,4 +11,11 @@
     <PackageReference Include="Cake.Core" Version="3.0.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Cake.Bridge.DependencyInjection.props" Pack="true" PackagePath="build\net6.0\Cake.Bridge.DependencyInjection.props" />
+    <None Include="Cake.Bridge.DependencyInjection.props" Pack="true" PackagePath="build\net7.0\Cake.Bridge.DependencyInjection.props" />
+  </ItemGroup>
+
+  <Import Project="Cake.Bridge.DependencyInjection.props" />
 </Project>

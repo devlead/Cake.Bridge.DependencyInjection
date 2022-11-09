@@ -25,6 +25,6 @@ public static CakeTaskBuilder Default(this CakeTaskBuilder cakeTaskBuilder)
 
 if (BuildSystem.GitHubActions.IsRunningOnGitHubActions)
 {
-    TaskSetup(context=> System.Console.WriteLine($"::group::{context.Task.Name.Quote()}"));
-    TaskTeardown(context=>System.Console.WriteLine("::endgroup::"));
+    TaskSetup(context => BuildSystem.GitHubActions.Commands.StartGroup(context.Task.Name));
+    TaskTeardown(context => BuildSystem.GitHubActions.Commands.EndGroup());
 }

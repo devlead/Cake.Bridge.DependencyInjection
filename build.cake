@@ -110,20 +110,36 @@ Task("Clean")
     )
 .Then("Integration-Test")
     .Default()
-    .DoesForEach<BuildData, string>(
+    .DoesForEach<BuildData, (string Framework, string Command)>(
         static (data, context)
-            => new []{ "context", "host" },
+            =>  (
+                    from framework in context
+                                        .XmlPeek(
+                                            data.IntegrationTestProject.FullPath,
+                                            "/Project/PropertyGroup/TargetFrameworks"
+                                        )
+                                        .Split(';', StringSplitOptions.TrimEntries)
+                    from command in new []{ "context", "host" }
+                    select (
+                        framework,
+                        command
+                    )
+                ),
         static (data, item, context)
-            => context.DotNetRun(
+            => {
+            context.Information("Testing {0}...", item);
+            context.DotNetRun(
                 data.IntegrationTestProject.FullPath,
                 new ProcessArgumentBuilder()
-                    .Append(item),
-                    new DotNetRunSettings {
-                        Framework = context.XmlPeek(data.IntegrationTestProject.FullPath, "/Project/PropertyGroup/TargetFramework"),
-                        NoWorkingDirectory = true,
-                        NoRestore = true
-                    }
-            )
+                    .Append(item.Command),
+                new DotNetRunSettings {
+                    Framework = item.Framework,
+                    NoWorkingDirectory = true,
+                    NoRestore = true
+                }
+            );
+            context.Information("Tested {0}.", item);
+        }
     )
 .Then("Pack")
     .Does<BuildData>(
@@ -138,6 +154,7 @@ Task("Clean")
         )
     )
 .Then("Upload-Artifacts")
+    .WithCriteria<BuildData>( (context, data) => data.ShouldPushGitHubPackages())
     .Does<BuildData>(
         static (context, data) => context
             .GitHubActions()

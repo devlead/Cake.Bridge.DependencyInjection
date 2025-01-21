@@ -18,7 +18,8 @@ public record BuildData(
     public string GitHubNuGetSource { get; } = System.Environment.GetEnvironmentVariable("GH_PACKAGES_NUGET_SOURCE");
     public string GitHubNuGetApiKey { get; } = System.Environment.GetEnvironmentVariable("GH_PACKAGES_NUGET_APIKEY");
 
-    public bool ShouldPushGitHubPackages() =>   !ShouldNotPublish
+    public bool ShouldPushGitHubPackages() =>   IsMainBranch
+                                                && !ShouldNotPublish
                                                 && !string.IsNullOrWhiteSpace(GitHubNuGetSource)
                                                 && !string.IsNullOrWhiteSpace(GitHubNuGetApiKey);
 

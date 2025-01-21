@@ -3,13 +3,19 @@ branches:
   master:
     regex: main
     mode: ContinuousDelivery
-    tag:
+    label:
     increment: Patch
-    prevent-increment-of-merged-branch-version: true
+    prevent-increment:
+      of-merged-branch: false
+      when-branch-merged: true # new branch related property
+      when-current-commit-tagged: true
     track-merge-target: false
   develop:
     mode: ContinuousDeployment
-    tag: alpha
+    label: alpha
     increment: Minor
-    prevent-increment-of-merged-branch-version: false
+    prevent-increment:
+      of-merged-branch: false
+      when-branch-merged: false # new branch related property
+      when-current-commit-tagged: false
     track-merge-target: true

@@ -20,7 +20,7 @@ Setup(
 
 
         var gh = context.GitHubActions();
-        var version = assertedVersions.LegacySemVerPadded;
+        var version = assertedVersions.SemVer;
 
         context.Information("Building version {0} (Branch: {1}, IsMain: {2})",
             version,

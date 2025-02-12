@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Cake.Bridge.DependencyInjection.props" Pack="true" PackagePath="build\net6.0\Cake.Bridge.DependencyInjection.props" />
-    <None Include="Cake.Bridge.DependencyInjection.props" Pack="true" PackagePath="build\net7.0\Cake.Bridge.DependencyInjection.props" />
+    <None Include="Cake.Bridge.DependencyInjection.props" Pack="true" PackagePath="build\net8.0\Cake.Bridge.DependencyInjection.props" />
+    <None Include="Cake.Bridge.DependencyInjection.props" Pack="true" PackagePath="build\net9.0\Cake.Bridge.DependencyInjection.props" />
   </ItemGroup>
 
   <Import Project="Cake.Bridge.DependencyInjection.props" />

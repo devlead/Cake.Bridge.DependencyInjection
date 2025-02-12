@@ -20,7 +20,13 @@ Setup(
 
 
         var gh = context.GitHubActions();
-        var version = assertedVersions.SemVer;
+        var buildDate = DateTime.UtcNow;
+        var runNumber = gh.IsRunningOnGitHubActions
+                            ? gh.Environment.Workflow.RunNumber
+                            : (short)((buildDate - buildDate.Date).TotalSeconds/3);
+
+        var version = FormattableString
+                        .Invariant($"{buildDate:yyyy.M.d}.{runNumber}");
 
         context.Information("Building version {0} (Branch: {1}, IsMain: {2})",
             version,

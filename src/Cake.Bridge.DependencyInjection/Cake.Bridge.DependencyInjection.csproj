@@ -7,14 +7,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" Condition="'$(TargetFramework)' == 'net8.0'" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" Condition="'$(TargetFramework)' == 'net9.0'" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" Condition="'$(TargetFramework)' == 'net9.0'" />
     <PackageReference Include="Cake.Core" Version="5.0.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Cake.Bridge.DependencyInjection.props" Pack="true" PackagePath="build\net6.0\Cake.Bridge.DependencyInjection.props" />
-    <None Include="Cake.Bridge.DependencyInjection.props" Pack="true" PackagePath="build\net7.0\Cake.Bridge.DependencyInjection.props" />
+    <None Include="Cake.Bridge.DependencyInjection.props" Pack="true" PackagePath="build\net8.0\Cake.Bridge.DependencyInjection.props" />
+    <None Include="Cake.Bridge.DependencyInjection.props" Pack="true" PackagePath="build\net9.0\Cake.Bridge.DependencyInjection.props" />
   </ItemGroup>
 
   <Import Project="Cake.Bridge.DependencyInjection.props" />

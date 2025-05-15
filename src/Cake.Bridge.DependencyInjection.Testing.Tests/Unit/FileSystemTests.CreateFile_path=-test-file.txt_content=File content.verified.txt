@@ -1,0 +1,14 @@
+﻿{
+  Path: /test,
+  Exists: true,
+  Hidden: false,
+  Directories: [],
+  Files: [
+    {
+      Path: /test/file.txt,
+      Exists: true,
+      Hidden: false,
+      Length: 12
+    }
+  ]
+}

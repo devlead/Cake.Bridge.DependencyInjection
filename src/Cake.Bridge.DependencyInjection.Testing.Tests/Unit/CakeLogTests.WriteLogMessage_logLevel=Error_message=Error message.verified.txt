@@ -1,0 +1,14 @@
+﻿{
+  LogLevel: Error,
+  Message: Error message,
+  Service: {
+    Entries: [
+      {
+        Verbosity: Diagnostic,
+        Level: Error,
+        Message: Error message
+      }
+    ],
+    Verbosity: Quiet
+  }
+}

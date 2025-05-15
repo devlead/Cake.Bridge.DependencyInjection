@@ -1,0 +1,11 @@
+﻿{
+  BuiltFramework: {
+    Identifier: .NETCoreApp,
+    Version: 8.0.0,
+    Profile: ,
+    FullName: .NETCoreApp,Version=v8.0.0
+  },
+  Runtime: Clr,
+  CakeVersion: 0.1.2,
+  IsCoreClr: false
+}

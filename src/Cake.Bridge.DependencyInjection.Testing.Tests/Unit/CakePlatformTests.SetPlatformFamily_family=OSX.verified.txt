@@ -1,0 +1,4 @@
+﻿{
+  Family: OSX,
+  Is64Bit: true
+}

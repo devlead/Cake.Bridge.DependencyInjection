@@ -1,0 +1,11 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Cake.Bridge.DependencyInjection.Example/Cake.Bridge.DependencyInjection.Example.csproj" />
+  <Project Path="Cake.Bridge.DependencyInjection.Testing.Tests/Cake.Bridge.DependencyInjection.Testing.Tests.csproj" />
+  <Project Path="Cake.Bridge.DependencyInjection.Testing/Cake.Bridge.DependencyInjection.Testing.csproj" />
+  <Project Path="Cake.Bridge.DependencyInjection/Cake.Bridge.DependencyInjection.csproj" />
+</Solution>

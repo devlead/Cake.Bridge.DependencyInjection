@@ -1,0 +1,20 @@
+﻿{
+  WorkingDirectory: /Working,
+  UserHomeDirectory: /Users/CakeUser,
+  ApplicationRoot: /Working/bin,
+  Platform: {
+    Family: OSX,
+    Is64Bit: true
+  },
+  Runtime: {
+    BuiltFramework: {
+      Identifier: .NETFramework,
+      Version: 4.6.2,
+      Profile: ,
+      FullName: .NETFramework,Version=v4.6.2
+    },
+    Runtime: Clr,
+    CakeVersion: 0.1.2,
+    IsCoreClr: false
+  }
+}

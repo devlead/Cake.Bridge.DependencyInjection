@@ -1,0 +1,4 @@
+﻿{
+  Family: Linux,
+  Is64Bit: false
+}

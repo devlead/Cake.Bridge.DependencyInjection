@@ -2,7 +2,7 @@
 
 public class BridgeArguments : ICakeArguments
 {
-    private Dictionary<string, ICollection<string>> Arguments { get; set; } = new Dictionary<string, ICollection<string>>();
+    private Dictionary<string, ICollection<string>> Arguments { get; set; } = [];
 
     bool ICakeArguments.HasArgument(string name)
         => Arguments.ContainsKey(name);

@@ -1,0 +1,5 @@
+﻿{
+  Key: foo,
+  Value: bar,
+  Result: bar
+}

@@ -1,0 +1,10 @@
+﻿{
+  Messages: [
+    Warning Message
+  ],
+  ErrorMessages: [],
+  ForegroundColor: Yellow,
+  BackgroundColor: Black,
+  SupportAnsiEscapeCodes: false,
+  OutputConsoleColor: false
+}

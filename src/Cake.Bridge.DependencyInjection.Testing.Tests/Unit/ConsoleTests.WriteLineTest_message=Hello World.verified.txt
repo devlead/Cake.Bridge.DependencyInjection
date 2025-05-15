@@ -1,0 +1,10 @@
+﻿{
+  Messages: [
+    Hello World
+  ],
+  ErrorMessages: [],
+  ForegroundColor: Gray,
+  BackgroundColor: Black,
+  SupportAnsiEscapeCodes: false,
+  OutputConsoleColor: false
+}

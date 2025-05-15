@@ -81,3 +81,52 @@ Total:                        00:00:00.0228957
 ```
 
 A full example console application using [Spectre.Console](https://www.nuget.org/packages/Spectre.Console) demonstrating usage of both [ICakeContext](https://cakebuild.net/api/Cake.Core/ICakeContext/) and [IScriptHost](https://cakebuild.net/api/Cake.Core.Scripting/IScriptHost/) can be found in this repository at [src/Cake.Bridge.DependencyInjection.Example](src/Cake.Bridge.DependencyInjection.Example).
+
+## Testing
+
+Cake.Bridge.DependencyInjection.Testing provides mock implementations of Cake Core interfaces for in-memory unit tests with minimal side effects, using the same dependency injection approach as the main library.
+
+### Register
+
+```csharp
+using Cake.Bridge.DependencyInjection.Testing;
+...
+serviceCollection
+    .AddCakeCoreFakes();
+```
+
+### Fake Implementations
+
+The following fake implementations are provided:
+
+| Fake Type          | Original Interface | Description                                  |
+|--------------------|--------------------|----------------------------------------------|
+| FakeConfiguration  | ICakeConfiguration | Mock implementation of configuration         |
+| FakeEnvironment    | ICakeEnvironment   | Mock environment with configurable settings  |
+| FakeFileSystem     | IFileSystem        | In-memory file system                        |
+| FakeLog            | ICakeLog           | Capture and inspect logging output           |
+| FakeConsole        | IConsole           | Mock console for testing console output      |
+| FakeRuntime        | ICakeRuntime       | Mock runtime information                     |
+| FakePlatform       | ICakePlatform      | Configurable platform information            |
+| BridgeArguments    | ICakeArguments     | Test arguments collection                    |
+| FakeProcessRunner  | IProcessRunner     | Mock process execution                       |
+| FakeProcess        | IProcess           | Mock process with configurable exit codes    |
+
+Each fake implementation can be configured during registration:
+
+```csharp
+serviceCollection.AddCakeCoreFakes(
+    configureFileSystem: fileSystem => {
+        fileSystem.CreateFile("/temp/test.txt", "test content");
+    },
+    configureLog: log => {
+        log.Verbosity = Verbosity.Diagnostic;
+    }
+);
+```
+
+### Example Tests
+
+For practical examples of testing with these fake implementations, see the test project in this repository at [src/Cake.Bridge.DependencyInjection.Testing.Tests](src/Cake.Bridge.DependencyInjection.Testing.Tests) using [Verify](https://github.com/VerifyTests/Verify) and [xUnit](https://xunit.net/).
+
+

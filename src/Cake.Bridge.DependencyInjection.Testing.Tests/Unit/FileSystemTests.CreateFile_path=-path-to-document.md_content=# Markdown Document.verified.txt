@@ -1,0 +1,14 @@
+﻿{
+  Path: /path/to,
+  Exists: true,
+  Hidden: false,
+  Directories: [],
+  Files: [
+    {
+      Path: /path/to/document.md,
+      Exists: true,
+      Hidden: false,
+      Length: 19
+    }
+  ]
+}

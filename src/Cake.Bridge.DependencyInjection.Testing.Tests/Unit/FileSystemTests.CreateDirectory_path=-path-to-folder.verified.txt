@@ -1,0 +1,31 @@
+﻿{
+  Path: /,
+  Exists: true,
+  Hidden: false,
+  Directories: [
+    {
+      Path: /path,
+      Exists: true,
+      Hidden: false,
+      Directories: [
+        {
+          Path: /path/to,
+          Exists: true,
+          Hidden: false,
+          Directories: [
+            {
+              Path: /path/to/folder,
+              Exists: true,
+              Hidden: false,
+              Directories: [],
+              Files: []
+            }
+          ],
+          Files: []
+        }
+      ],
+      Files: []
+    }
+  ],
+  Files: []
+}

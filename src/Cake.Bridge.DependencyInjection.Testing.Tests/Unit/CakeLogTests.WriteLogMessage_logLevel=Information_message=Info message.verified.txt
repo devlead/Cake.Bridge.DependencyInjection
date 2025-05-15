@@ -1,0 +1,14 @@
+﻿{
+  LogLevel: Information,
+  Message: Info message,
+  Service: {
+    Entries: [
+      {
+        Verbosity: Diagnostic,
+        Level: Information,
+        Message: Info message
+      }
+    ],
+    Verbosity: Quiet
+  }
+}

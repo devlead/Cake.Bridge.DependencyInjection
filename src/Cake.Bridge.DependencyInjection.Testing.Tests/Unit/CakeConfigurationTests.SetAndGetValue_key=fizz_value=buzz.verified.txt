@@ -1,0 +1,5 @@
+﻿{
+  Key: fizz,
+  Value: buzz,
+  Result: buzz
+}

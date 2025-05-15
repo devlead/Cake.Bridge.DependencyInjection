@@ -1,0 +1,4 @@
+﻿{
+  Family: Windows,
+  Is64Bit: true
+}

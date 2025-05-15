@@ -1,0 +1,11 @@
+﻿{
+  BuiltFramework: {
+    Identifier: .NETFramework,
+    Version: 4.6.2,
+    Profile: ,
+    FullName: .NETFramework,Version=v4.6.2
+  },
+  Runtime: Clr,
+  CakeVersion: 3.1.0,
+  IsCoreClr: false
+}

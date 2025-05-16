@@ -48,9 +48,10 @@ public static class CakeFakeCoreExtensions
         Configure<TService>? configure = null
     ) where TService : class
     {
+        configure?.Invoke(serviceInstance);
         return serviceCollection.AddSingleton(provider =>
         {
-            configure?.Invoke(serviceInstance);
+            
             var configurations = provider.GetService<Configure<TService>[]>() ?? [];
             foreach (var configure in configurations)
             {

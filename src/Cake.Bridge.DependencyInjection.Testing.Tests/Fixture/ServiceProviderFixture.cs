@@ -2,6 +2,11 @@
 {
     static partial void InitServiceProvider(IServiceCollection services)
     {
-        services.AddCakeCoreFakes();
+        services.AddCakeCoreFakes(
+           configureEnvironment: env =>
+           {
+               env.SetEnvironmentVariable("KEY", "VALUE");
+           }
+        );
     }
 }

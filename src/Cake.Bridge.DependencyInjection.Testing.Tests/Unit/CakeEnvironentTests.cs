@@ -1,6 +1,4 @@
-﻿using Cake.Core.Configuration;
-
-namespace Cake.Bridge.DependencyInjection.Testing.Tests.Unit;
+﻿namespace Cake.Bridge.DependencyInjection.Testing.Tests.Unit;
 
 public class CakeEnvironentTests
 {
@@ -34,5 +32,31 @@ public class CakeEnvironentTests
 
         // Then
         await Verify(service);
+    }
+
+    [Fact]
+    public async Task GetEnvironmentVariable()
+    {
+        // Given
+        var service = ServiceProviderFixture.GetRequiredService<ICakeEnvironment>();
+
+        // When
+        var result = service.GetEnvironmentVariable("KEY");
+
+        // Then
+        await Verify(result);
+    }
+
+    [Fact]
+    public async Task ExpandEnvironmentVariables()
+    {
+        // Given
+        var service = ServiceProviderFixture.GetRequiredService<ICakeEnvironment>();
+
+        // When
+        var result = service.ExpandEnvironmentVariables("%KEY%");
+
+        // Then
+        await Verify(result);
     }
 }

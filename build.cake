@@ -114,6 +114,17 @@ Task("Clean")
             }
         )
     )
+.Then("Test")
+    .Does<BuildData>(
+        static (context, data) => context.DotNetTest(
+            data.ProjectRoot.FullPath,
+            new DotNetTestSettings {
+                NoRestore = true,
+                NoBuild = true,
+                MSBuildSettings = data.MSBuildSettings
+            }
+        )
+    )
 .Then("Integration-Test")
     .Default()
     .DoesForEach<BuildData, (string Framework, string Command)>(

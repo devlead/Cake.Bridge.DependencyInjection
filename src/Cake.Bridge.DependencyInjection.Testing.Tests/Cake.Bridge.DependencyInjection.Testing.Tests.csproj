@@ -28,12 +28,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Devlead.Testing.MockHttp" Version="2025.7.9.233" />
+    <PackageReference Include="Devlead.Testing.MockHttp" Version="2025.8.6.257" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-    <PackageReference Include="Verify.XunitV3" Version="30.5.0" />
+    <PackageReference Include="Verify.XunitV3" Version="30.11.0" />
     <PackageReference Include="Verify.DiffPlex" Version="3.1.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.3" />
-    <PackageReference Include="xunit.v3" Version="3.0.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+    <PackageReference Include="xunit.v3" Version="3.0.1" />
   </ItemGroup>
 
   <ItemGroup>

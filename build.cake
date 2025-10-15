@@ -23,10 +23,14 @@ Setup(
         var buildDate = DateTime.UtcNow;
         var runNumber = gh.IsRunningOnGitHubActions
                             ? gh.Environment.Workflow.RunNumber
-                            : (short)((buildDate - buildDate.Date).TotalSeconds/3);
+                            : 0;
+      
+        var suffix = runNumber == 0 
+                       ? $"-{(short)((buildDate - buildDate.Date).TotalSeconds/3)}"
+                       : string.Empty;
 
         var version = FormattableString
-                        .Invariant($"{buildDate:yyyy.M.d}.{runNumber}");
+                          .Invariant($"{buildDate:yyyy.M.d}.{runNumber}{suffix}");
 
         context.Information("Building version {0} (Branch: {1}, IsMain: {2})",
             version,

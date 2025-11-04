@@ -9,7 +9,7 @@
 
   <ItemGroup>
 
-    <PackageReference Include="Spectre.Console" Version="0.52.0" />
+    <PackageReference Include="Spectre.Console" Version="0.53.0" />
     <PackageReference Include="Spectre.Console.Cli" Version="0.52.0" />
     <PackageReference Include="Spectre.Console.Cli.Extensions.DependencyInjection" Version="0.16.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />

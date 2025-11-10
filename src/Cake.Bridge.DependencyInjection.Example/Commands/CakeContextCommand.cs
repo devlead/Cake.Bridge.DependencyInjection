@@ -9,7 +9,7 @@ namespace Cake.Bridge.DependencyInjection.Example.Commands;
 // ReSharper disable once ClassNeverInstantiated.Global
 public class CakeContextCommand : Command<CakeContextSettings>
 {
-    public override int Execute(CommandContext context, CakeContextSettings settings)
+    public override int Execute(CommandContext context, CakeContextSettings settings, CancellationToken token)
     {
         var absoluteSourcePath = settings.Context.MakeAbsolute(settings.SourcePath);
         var directory = settings.Context.FileSystem.GetDirectory(absoluteSourcePath);

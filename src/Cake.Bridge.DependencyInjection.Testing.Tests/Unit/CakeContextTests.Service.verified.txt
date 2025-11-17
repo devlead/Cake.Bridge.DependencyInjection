@@ -1,5 +1,12 @@
 ﻿{
-  FileSystem: {},
+  FileSystem: {
+    TimeProvider: {
+      Start: DateTimeOffset_1,
+      AutoAdvanceAmount: 00:00:00,
+      LocalTimeZone: UTC,
+      TimestampFrequency: 10000000
+    }
+  },
   Environment: {
     WorkingDirectory: /Working,
     UserHomeDirectory: /Users/CakeUser,

@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Cake.Bridge.DependencyInjection.Example.Commands.Settings;
+﻿using Cake.Bridge.DependencyInjection.Example.Commands.Settings;
 using Cake.Common.Diagnostics;
 using Cake.Core;
 using Cake.Core.Scripting;
@@ -13,7 +12,7 @@ public class ScriptHostCommand : AsyncCommand<ScriptHostSettings>
     private IScriptHost ScriptHost { get; }
     private BridgeArguments BridgeArguments { get; }
 
-    public override async Task<int> ExecuteAsync(CommandContext context, ScriptHostSettings settings)
+    public override async Task<int> ExecuteAsync(CommandContext context, ScriptHostSettings settings, CancellationToken token)
     {
         if (settings.Exclusive)
         {

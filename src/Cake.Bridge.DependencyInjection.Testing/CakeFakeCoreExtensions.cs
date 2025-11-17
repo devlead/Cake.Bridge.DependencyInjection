@@ -3,6 +3,8 @@ using Cake.Core.IO.NuGet;
 using Cake.Core.Reflection;
 using Cake.Core.Scripting;
 using Cake.Core.Tooling;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Time.Testing;
 using System.Text;
 
 
@@ -88,6 +90,16 @@ public static class CakeFakeCoreExtensions
         ProcessRunnerFactory? processRunnerFactory = null
     )
     {
+
+        // Time Provider
+        var timeprovider = serviceCollection
+                            .BuildServiceProvider()
+                            .GetService<FakeTimeProvider>() ?? new FakeTimeProvider();
+        serviceCollection
+            .TryAddSingleton(timeprovider);
+        serviceCollection
+            .TryAddSingleton<TimeProvider>(timeprovider);
+
         // Fake Configuration
         var configuration = new FakeConfiguration();
         serviceCollection.AddConfiguredSingleton(configuration, configureConfiguration);
@@ -97,7 +109,8 @@ public static class CakeFakeCoreExtensions
         serviceCollection.AddConfiguredSingleton(environment, configureEnvironment);
 
         // Fake FileSystem
-        var fileSystem = new FakeFileSystem(environment);
+        var fileSystem = new FakeFileSystem(environment, timeprovider);
+
         serviceCollection.AddConfiguredSingleton(fileSystem, configureFileSystem);
 
         // Fake Log

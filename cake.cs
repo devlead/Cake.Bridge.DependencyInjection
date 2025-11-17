@@ -1,15 +1,15 @@
-// Install .NET Core Global tools.
-#tool "dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=6.4.0"
+#:sdk Cake.Sdk@6.0.0
+#:property IncludeAdditionalFiles=./build/*.cs
 
-#load "build/records.cake"
-#load "build/helpers.cake"
 
 /*****************************
  * Setup
  *****************************/
 Setup(
     static context => {
-
+        // Install .NET Core Global tools.
+        InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=DPI&version=2025.11.5.295");
+        InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=6.5.0");
         var assertedVersions = context.GitVersion(new GitVersionSettings
             {
                 OutputType = GitVersionOutput.Json
@@ -17,12 +17,10 @@ Setup(
 
         var branchName = assertedVersions.BranchName;
         var isMainBranch = StringComparer.OrdinalIgnoreCase.Equals("main", branchName);
-
-
-        var gh = context.GitHubActions();
+        
         var buildDate = DateTime.UtcNow;
-        var runNumber = gh.IsRunningOnGitHubActions
-                            ? gh.Environment.Workflow.RunNumber
+        var runNumber = GitHubActions.IsRunningOnGitHubActions
+                            ? GitHubActions.Environment.Workflow.RunNumber
                             : 0;
       
         var suffix = runNumber == 0 
@@ -60,7 +58,7 @@ Setup(
                 .WithProperty("PackageProjectUrl", "https://github.com/devlead/Cake.Bridge.DependencyInjection")
                 .WithProperty("RepositoryUrl", "https://github.com/devlead/Cake.Bridge.DependencyInjection.git")
                 .WithProperty("RepositoryType", "git")
-                .WithProperty("ContinuousIntegrationBuild", gh.IsRunningOnGitHubActions ? "true" : "false")
+                .WithProperty("ContinuousIntegrationBuild", GitHubActions.IsRunningOnGitHubActions ? "true" : "false")
                 .WithProperty("EmbedUntrackedSources", "true"),
             artifactsPath,
             artifactsPath.Combine(version)
@@ -86,26 +84,23 @@ Task("Clean")
     )
 .Then("DPI")
     .Does<BuildData>(
-        static (context, data) => context.DotNetTool(
-                "tool",
-                new DotNetToolSettings {
-                    ArgumentCustomization = args => args
-                                                        .Append("run")
-                                                        .Append("dpi")
-                                                        .Append("nuget")
-                                                        .Append("--silent")
-                                                        .AppendSwitchQuoted("--output", "table")
-                                                        .Append(
-                                                            (
-                                                                !string.IsNullOrWhiteSpace(context.EnvironmentVariable("NuGetReportSettings_SharedKey"))
-                                                                &&
-                                                                !string.IsNullOrWhiteSpace(context.EnvironmentVariable("NuGetReportSettings_WorkspaceId"))
-                                                            )
-                                                                ? "report"
-                                                                : "analyze"
-                                                            )
-                                                        .AppendSwitchQuoted("--buildversion", data.Version)
-                }
+        static (context, data) => Command(
+                ["dpi", "dpi.exe"],
+                new ProcessArgumentBuilder()
+                    .Append("nuget")
+                    .Append("--silent")
+                    .AppendSwitchQuoted("--output", "table")
+                    .Append(
+                        (
+                            !string.IsNullOrWhiteSpace(context.EnvironmentVariable("NuGetReportSettings_SharedKey"))
+                            &&
+                            !string.IsNullOrWhiteSpace(context.EnvironmentVariable("NuGetReportSettings_WorkspaceId"))
+                        )
+                            ? "report"
+                            : "analyze"
+                        )
+                    .AppendSwitchQuoted("--buildversion", data.Version)
+                
             )
     )
 .Then("Build")
@@ -119,13 +114,15 @@ Task("Clean")
         )
     )
 .Then("Test")
-    .Does<BuildData>(
-        static (context, data) => context.DotNetTest(
-            data.ProjectRoot.FullPath,
+    .DoesForEach<BuildData, FilePath>(
+        GetFiles("./src/**/*.Tests.csproj"),
+        static (data, item, context) => context.DotNetTest(
+            item.FullPath,
             new DotNetTestSettings {
                 NoRestore = true,
                 NoBuild = true,
-                MSBuildSettings = data.MSBuildSettings
+                MSBuildSettings = data.MSBuildSettings,
+                PathType = DotNetTestPathType.Project
             }
         )
     )
@@ -177,8 +174,7 @@ Task("Clean")
 .Then("Upload-Artifacts")
     .WithCriteria<BuildData>( (context, data) => data.ShouldPushGitHubPackages())
     .Does<BuildData>(
-        static (context, data) => context
-            .GitHubActions()
+        static (context, data) => GitHubActions
             .Commands
             .UploadArtifact(data.ArtifactsPath, "artifacts")
     )

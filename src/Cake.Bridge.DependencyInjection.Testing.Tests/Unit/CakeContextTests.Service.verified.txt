@@ -1,5 +1,10 @@
 ﻿{
-  FileSystem: {},
+  FileSystem: {
+    TimeProvider: {
+      LocalTimeZone: W. Europe Standard Time,
+      TimestampFrequency: 10000000
+    }
+  },
   Environment: {
     WorkingDirectory: /Working,
     UserHomeDirectory: /Users/CakeUser,

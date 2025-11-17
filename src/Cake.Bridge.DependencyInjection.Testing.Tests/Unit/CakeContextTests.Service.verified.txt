@@ -1,7 +1,9 @@
 ﻿{
   FileSystem: {
     TimeProvider: {
-      LocalTimeZone: W. Europe Standard Time,
+      Start: DateTimeOffset_1,
+      AutoAdvanceAmount: 00:00:00,
+      LocalTimeZone: UTC,
       TimestampFrequency: 10000000
     }
   },

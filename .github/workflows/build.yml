@@ -12,13 +12,17 @@ jobs:
   build:
     name: Build
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
+      id-token: write
+      packages: write
     strategy:
       fail-fast: false
       matrix:
         os: [windows-latest]
     steps:
       - name: Get the sources
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -51,5 +55,5 @@ jobs:
           NUGET_APIKEY: ${{steps.login.outputs.NUGET_API_KEY}}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          cake-version: tool-manifest
+          file-path: cake.cs
           target: GitHub-Actions

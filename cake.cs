@@ -9,7 +9,7 @@ Setup(
     static context => {
         // Install .NET Core Global tools.
         InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=DPI&version=2025.11.5.295");
-        InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=6.5.0");
+        InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=6.6.0");
         var assertedVersions = context.GitVersion(new GitVersionSettings
             {
                 OutputType = GitVersionOutput.Json

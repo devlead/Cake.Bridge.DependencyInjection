@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Devlead.Testing.MockHttp" Version="2026.2.11.605" />
+    <PackageReference Include="Devlead.Testing.MockHttp" Version="2026.5.15.777" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.5.1" />
     <PackageReference Include="Verify.XunitV3" Version="31.16.3" />
     <PackageReference Include="Verify.DiffPlex" Version="3.1.2" />

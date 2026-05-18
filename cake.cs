@@ -1,4 +1,4 @@
-#:sdk Cake.Sdk@6.1.0
+#:sdk Cake.Sdk@6.1.1
 #:property IncludeAdditionalFiles=./build/*.cs
 
 
@@ -9,7 +9,7 @@ Setup(
     static context => {
         // Install .NET Core Global tools.
         InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=DPI&version=2026.2.11.364");
-        InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=6.6.0");
+        InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=6.7.0");
         var assertedVersions = context.GitVersion(new GitVersionSettings
             {
                 OutputType = GitVersionOutput.Json

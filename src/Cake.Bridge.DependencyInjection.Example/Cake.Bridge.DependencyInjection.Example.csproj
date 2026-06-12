@@ -9,7 +9,7 @@
 
   <ItemGroup>
 
-    <PackageReference Include="Spectre.Console" Version="0.56.0" />
+    <PackageReference Include="Spectre.Console" Version="0.57.0" />
     <PackageReference Include="Spectre.Console.Cli" Version="0.55.0" />
     <PackageReference Include="Spectre.Console.Cli.Extensions.DependencyInjection" Version="0.26.0" />
     <PackageReference Include="Cake.Core" Version="6.2.0" />

@@ -12,7 +12,7 @@ public class ScriptHostCommand : AsyncCommand<ScriptHostSettings>
     private IScriptHost ScriptHost { get; }
     private BridgeArguments BridgeArguments { get; }
 
-    protected override async Task<int> ExecuteAsync(CommandContext context, ScriptHostSettings settings, CancellationToken token)
+    public override async Task<int> ExecuteAsync(CommandContext context, ScriptHostSettings settings, CancellationToken token)
     {
         if (settings.Exclusive)
         {

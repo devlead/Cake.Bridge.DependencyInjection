@@ -1,6 +1,6 @@
 ﻿
 using System.Runtime.CompilerServices;
-using VerifyTests.DiffPlex;
+using DiffEngine;
 
 namespace Cake.Bridge.DependencyInjection.Testing.Tests;
 
@@ -9,7 +9,7 @@ public static class VerifyConfig
     [ModuleInitializer]
     public static void Init()
     {
-        VerifyDiffPlex.Initialize(OutputType.Compact);
+        VerifierSettings.UseTextDiffFormat(TextDiffFormat.Compact);
         VerifierSettings.InitializePlugins();
         VerifierSettings.DontIgnoreEmptyCollections();
         VerifierSettings.IgnoreStackTrace();

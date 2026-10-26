@@ -9,7 +9,7 @@
 Setup(
     static context => {
         // Install .NET Core Global tools.
-        InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=DPI&version=2026.5.18.419");
+        InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=DPI&version=2026.10.16.523");
         InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=6.7.0");
         var assertedVersions = context.GitVersion(new GitVersionSettings
             {
@@ -104,11 +104,7 @@ Task("NuGet-Login")
                     .Append("--silent")
                     .AppendSwitchQuoted("--output", "table")
                     .Append(
-                        (
-                            !string.IsNullOrWhiteSpace(context.EnvironmentVariable("NuGetReportSettings_SharedKey"))
-                            &&
-                            !string.IsNullOrWhiteSpace(context.EnvironmentVariable("NuGetReportSettings_WorkspaceId"))
-                        )
+                        data.ShouldReportDPI()
                             ? "report"
                             : "analyze"
                         )

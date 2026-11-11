@@ -97,8 +97,23 @@ Task("NuGet-Login")
     )
 .Then("DPI")
     .Does<BuildData>(
-        static (context, data) => Command(
-                ["dpi", "dpi.exe"],
+        static async (context, data) => {
+            var workload = data.ShouldReportDPI() && data.ShouldPrepareAzureWorkloadIdentity()
+                            ? await GitHubActions.Commands.AzurePrepareWorkloadIdentity(data.AzureTenantId!, data.AzureClientId!)
+                            : null;
+
+            Command(
+                new CommandSettings {
+                    ToolName = "dpi",
+                    ToolExecutableNames = ["dpi", "dpi.exe"],
+                    EnvironmentVariables = workload is null
+                        ? new Dictionary<string, string>()
+                        : new Dictionary<string, string> {
+                            ["AZURE_TENANT_ID"] = workload.TenantId,
+                            ["AZURE_CLIENT_ID"] = workload.ClientId,
+                            ["AZURE_FEDERATED_TOKEN_FILE"] = workload.FederatedTokenFile.FullPath
+                        }
+                },
                 new ProcessArgumentBuilder()
                     .Append("nuget")
                     .Append("--silent")
@@ -109,8 +124,8 @@ Task("NuGet-Login")
                             : "analyze"
                         )
                     .AppendSwitchQuoted("--buildversion", data.Version)
-                
-            )
+            );
+        }
     )
 .Then("Build")
     .Does<BuildData>(

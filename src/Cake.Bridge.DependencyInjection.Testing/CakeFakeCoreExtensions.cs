@@ -188,6 +188,7 @@ public static class CakeFakeCoreExtensions
         serviceCollection.AddSingleton<IToolRepository, ToolRepository>();
         serviceCollection.AddSingleton<IToolResolutionStrategy, ToolResolutionStrategy>();
         serviceCollection.AddSingleton<IToolLocator, ToolLocator>();
+        serviceCollection.AddSingleton<IToolInstaller, ToolInstaller>();
 
         // Logging
         serviceCollection.AddSingleton<IConsole>(console);

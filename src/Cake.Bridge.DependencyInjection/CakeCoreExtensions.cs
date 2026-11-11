@@ -52,6 +52,7 @@ public static class CakeCoreExtensions
         serviceCollection.AddSingleton<IToolRepository, ToolRepository>();
         serviceCollection.AddSingleton<IToolResolutionStrategy, ToolResolutionStrategy>();
         serviceCollection.AddSingleton<IToolLocator, ToolLocator>();
+        serviceCollection.AddSingleton<IToolInstaller, ToolInstaller>();
 
         // Logging
         serviceCollection.AddSingleton<IConsole, CakeConsole>();

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net8.0;net9.0;net10.0;net11.0</TargetFrameworks>
+    <TargetFrameworks>net10.0;net11.0</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -11,9 +11,9 @@
 
     <PackageReference Include="Spectre.Console" Version="0.57.2" />
     <PackageReference Include="Spectre.Console.Cli" Version="0.57.2" />
-    <PackageReference Include="Spectre.Console.Cli.Extensions.DependencyInjection" Version="0.31.0" />
-    <PackageReference Include="Cake.Core" Version="6.3.0" />
-    <PackageReference Include="Cake.Common" Version="6.3.0" />
+    <PackageReference Include="Spectre.Console.Cli.Extensions.DependencyInjection" Version="0.33.0" />
+    <PackageReference Include="Cake.Core" Version="7.0.0" />
+    <PackageReference Include="Cake.Common" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
